@@ -45,4 +45,20 @@ public interface BrandService {
      * @param brand 实体
      */
     public void update(TbBrand brand);
+
+    /**
+     * 删除实体
+     * @param ids 实体的id数组
+     */
+    public void delete(Long[] ids);
+
+    /**
+     * 按条件查询实体
+     * @param brand 实体
+     * @param pageNum 当前页
+     * @param pageSize 页面显示数量
+     * @return
+     */
+    public PageResult findPage(TbBrand brand, int pageNum, int pageSize);
+
 }

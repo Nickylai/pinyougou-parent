@@ -45,7 +45,7 @@
 
 			//刷新列表
             $scope.reloadList = function () {
-                $scope.findPage($scope.paginationConf.currentPage,$scope.paginationConf.itemsPerPage);
+                $scope.search($scope.paginationConf.currentPage,$scope.paginationConf.itemsPerPage);
 
             };
 
@@ -85,8 +85,43 @@
                 );
             };
 
-            //修改实体
+            //选中实体复选框
+			$scope.selectIds=[];//用户勾选的id集合
+            $scope.updateSelection = function ($event, id) {
+                if ($event.target.checked) {//判断当前复选框是否被选中状态
+                    $scope.selectIds.push(id);//向集合中添加元素
+                } else {
+                    var index = $scope.selectIds.indexOf(id);//查找id的索引
+                    $scope.selectIds.splice(index, 1);//index移除的位置，1为移除的个数
+                }
+            };
 
+            //删除选中的实体
+            $scope.dele = function () {
+                if (confirm('确定要删除选中的品牌吗？')) {
+                    $http.get('../brand/delete.do?ids=' + $scope.selectIds).success(
+                        function (response) {
+                            if (response.success) {
+                                $scope.reloadList();
+                            } else {
+                                alert(response.message);
+                            }
+                        }
+                    );
+                }
+            };
+
+            $scope.searchEntity = {};//初始化
+            //条件查询
+			$scope.search=function (page,size) {
+                $http.post('../brand/search.do?page=' + page + '&size=' + size, $scope.searchEntity).success(
+                    function (response) {
+                        $scope.list = response.rows;//显示当前页数据
+                        $scope.paginationConf.totalItems = response.total;//更新总记录数
+
+                    }
+                );
+            }
 
         });
 	</script>
@@ -107,14 +142,14 @@
                                 <div class="form-group form-inline">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ng-click="entity={}" ><i class="fa fa-file-o"></i> 新建</button>
-                                        <button type="button" class="btn btn-default" title="删除" ><i class="fa fa-trash-o"></i> 删除</button>           
+                                        <button type="button" class="btn btn-default" title="删除" ng-click="dele()"><i class="fa fa-trash-o" ></i> 删除</button>
                                         <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="box-tools pull-right">
                                 <div class="has-feedback">
-							                                         
+							           品牌名称：<input ng-model="searchEntity.name"> 品牌首字母：<input ng-model="searchEntity.firstChar" > <button class="btn btn-default" ng-click="reloadList()">查询</button>
                                 </div>
                             </div>
                             <!--工具栏/-->
@@ -134,7 +169,7 @@
 			                      </thead>
 			                      <tbody>
 			                          <tr ng-repeat="entity in list">
-			                              <td><input  type="checkbox" ></td>			                              
+			                              <td><input  type="checkbox" ng-click="updateSelection($event,entity.id)" ></td>
 				                          <td>{{entity.id}}</td>
 									      <td>{{entity.name}}</td>
 		                                  <td>{{entity.firstChar}}</td>
@@ -147,7 +182,7 @@
 			                  </table>
 			                  <!--数据列表/-->
 							<tm-pagination conf="paginationConf"></tm-pagination>
-							 
+							 <!--{{selectIds}}-->
                         </div>
                         <!-- 数据表格 /-->
                         

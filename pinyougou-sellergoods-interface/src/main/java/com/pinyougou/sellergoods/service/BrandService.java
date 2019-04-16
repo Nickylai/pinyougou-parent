@@ -13,7 +13,24 @@ import java.util.List;
  * @see
  */
 public interface BrandService {
+    /**
+     * 查询所有
+     * @return 结果集
+     */
     public List<TbBrand> findAll();
 
+    /**
+     * 分页查询
+     * @param pageNum 当前页
+     * @param pageSize 每页记录数
+     * @return
+     */
     public PageResult findPage(int pageNum, int pageSize);
+
+    /**
+     * 增加品牌
+     * @param brand 品牌实体
+     */
+    public void add(TbBrand brand);
+
 }

@@ -58,6 +58,20 @@
                     }
 				)
             }
+
+            //实现新增
+			$scope.add=function () {
+                $http.post('../brand/add.do',$scope.entity).success(
+                    function (response) {
+                        if (response.success) {
+                            $scope.reloadList();//成功了，重新加载列表
+                        }else {
+                            alert(response.message);//失败了，弹出信息
+						}
+                    }
+				);
+            }
+
         });
 	</script>
 </head>
@@ -139,16 +153,16 @@
 			<table class="table table-bordered table-striped"  width="800px">
 		      	<tr>
 		      		<td>品牌名称</td>
-		      		<td><input  class="form-control" placeholder="品牌名称" >  </td>
+		      		<td><input  class="form-control" placeholder="品牌名称" ng-model="entity.name">   </td>
 		      	</tr>		      	
 		      	<tr>
 		      		<td>首字母</td>
-		      		<td><input  class="form-control" placeholder="首字母">  </td>
+		      		<td><input  class="form-control" placeholder="首字母" ng-model="entity.firstChar">  </td>
 		      	</tr>		      	
 			 </table>				
 		</div>
 		<div class="modal-footer">						
-			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button>
+			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="add()">保存</button>
 			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
 		</div>
 	  </div>

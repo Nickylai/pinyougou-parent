@@ -2,7 +2,9 @@
 app.controller('specificationController' ,function($scope,$controller   ,specificationService){	
 	
 	$controller('baseController',{$scope:$scope});//继承
-	
+
+
+
     //读取列表数据绑定到表单中  
 	$scope.findAll=function(){
 		specificationService.findAll().success(
@@ -76,5 +78,12 @@ app.controller('specificationController' ,function($scope,$controller   ,specifi
 			}			
 		);
 	}
+
+
+    $scope.entity = {specification:{},specificationOptionList:[]};
+	//增加规格的表格行
+	$scope.addTableRow=function () {
+        $scope.entity.specificationOptionList.push({});
+    }
     
 });	

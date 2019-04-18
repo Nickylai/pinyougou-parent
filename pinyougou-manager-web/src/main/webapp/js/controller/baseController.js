@@ -28,4 +28,17 @@ app.controller('baseController', function ($scope) {
         }
     };
 
+    //提取JSON字符串中的某个属性，转换格式
+    $scope.jsonToString=function (jsonString ,key) {
+        var json = JSON.parse(jsonString);
+        var value = "";
+        for (var i = 0; i < json.length; i++) {
+            value +=","+ json[i][key];
+        }
+
+        var s = value.substring(1);
+
+        return s;
+    }
+
 });

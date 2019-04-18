@@ -76,5 +76,10 @@ app.controller('typeTemplateController' ,function($scope,$controller   ,typeTemp
 			}			
 		);
 	}
+
+	//品牌列表
+	$scope.brandList={data:[{id:1,text:'华为'},{id:2,text:'联想'},{id:3, text: '小米'}]};
+
+
     
 });	

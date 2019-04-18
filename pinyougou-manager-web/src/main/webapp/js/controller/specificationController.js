@@ -85,5 +85,11 @@ app.controller('specificationController' ,function($scope,$controller   ,specifi
 	$scope.addTableRow=function () {
         $scope.entity.specificationOptionList.push({});
     }
+
+    //删除规格行
+    $scope.deleTableRow=function (index) {
+        $scope.entity.specificationOptionList.splice(index,1);
+
+    }
     
 });	

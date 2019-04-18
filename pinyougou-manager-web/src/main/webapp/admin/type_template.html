@@ -38,6 +38,7 @@
     <!--注意引入位置-->
     <script type="text/javascript" src="../js/service/typeTemplateService.js"></script>
     <script type="text/javascript" src="../js/service/brandService.js"></script>
+    <script type="text/javascript" src="../js/service/specificationService.js"></script>
 
 	<script type="text/javascript" src="../js/controller/baseController.js"></script>
 	<script type="text/javascript" src="../js/controller/typeTemplateController.js"></script>
@@ -45,7 +46,7 @@
 
 </head>
 
-<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="typeTemplateController" ng-init="findBrandList()">
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="typeTemplateController" ng-init="findBrandList();findSpecList()">
   <!-- .box-body -->
                 
                     <div class="box-header with-border">
@@ -140,13 +141,13 @@
 		      	<tr>
 		      		<td>关联品牌</td>
 		      		<td>
-		      			<input class="form-control" select2 select2-model="entity.brandIds" config="brandList" multiple>
+		      			<input class="form-control" select2 select2-model="entity.brandIds" config="brandList" multiple placeholder="选择品牌(可多选)">
 		      		</td>
 		      	</tr>
 		      	<tr>
 		      		<td>关联规格</td>
 		      		<td>
-	
+						<input class="form-control" select2 select2-model="entity.specIds" config="specList" multiple placeholder="选择规格(可多选）">
 		      		</td>
 		      	</tr>	
 		      	

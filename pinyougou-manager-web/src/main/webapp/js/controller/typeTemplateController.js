@@ -100,8 +100,16 @@ app.controller('typeTemplateController' ,function($scope,$controller   ,typeTemp
                 $scope.specList = {data: response};
             }
         );
+    };
+
+	//增加扩展行
+	$scope.addTableRow=function () {
+        $scope.entity.customAttributeItems.push({});
     }
 
-
+    //删除行
+	$scope.deleTableRow=function (index) {
+        $scope.entity.customAttributeItems.splice(index, 1);
+    }
     
 });	

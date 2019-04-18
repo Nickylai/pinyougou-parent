@@ -11,6 +11,7 @@ import entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Nickylai
@@ -93,5 +94,10 @@ public class BrandServiceImpl implements BrandService {
         List<TbBrand> result = page.getResult();
 
         return new PageResult(total,result);
+    }
+
+    @Override
+    public List<Map> selectOptionList() {
+        return brandMapper.selectOptionList();
     }
 }

@@ -74,7 +74,7 @@ app.controller('brandController',function ($scope,$controller,brandService) {
     $scope.searchEntity = {};//初始化
     //条件查询
     $scope.search=function (page,size) {
-        brandService.serach(page, size, $scope.searchEntity).success(
+        brandService.search(page, size, $scope.searchEntity).success(
             function (response) {
                 $scope.list = response.rows;//显示当前页数据
                 $scope.paginationConf.totalItems = response.total;//更新总记录数

@@ -17,7 +17,7 @@ http://www.springframework.org/schema/security/spring-security.xsd">
     <http use-expressions="false">
         <intercept-url pattern="/**"  access="ROLE_ADMIN" />
         <!--表单登录选项-->
-        <form-login login-page="/login.html"  default-target-url="/admin/index.html" authentication-failure-forward-url="/login.html"/>
+        <form-login login-page="/login.html"  default-target-url="/admin/index.html" authentication-failure-forward-url="/login.html" always-use-default-target="true"/>
         <csrf disabled="true"/>
         <headers>
             <frame-options policy="SAMEORIGIN"/>

@@ -64,5 +64,8 @@ public interface SellerService {
 	 * @param status 商户的状态
 	 */
 	public void updateStatus(String sellerId, String status);
+
+
+
 	
 }

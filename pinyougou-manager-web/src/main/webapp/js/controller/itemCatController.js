@@ -36,6 +36,7 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 
 	//批量删除
 	$scope.dele=function(){
+
 		//获取选中的复选框
 		itemCatService.dele( $scope.selectIds ).success(
 			function(response){
@@ -83,14 +84,14 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
             $scope.entity_2 = p_entity;
         }
         $scope.findByParentId(p_entity.id);
-        alert(p_entity.id)
+        // alert(p_entity.id)
     };
 
     $scope.parentId = 0;//上级id
 
     //根据上级id显示下级列表
     $scope.findByParentId=function(parentId) {
-        alert(parentId)
+        // alert(parentId)
         $scope.parentId = parentId;//记住上级 ID
         itemCatService.findByParentId(parentId).success(
             function (response) {

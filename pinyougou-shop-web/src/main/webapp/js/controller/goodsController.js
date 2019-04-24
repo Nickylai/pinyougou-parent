@@ -76,5 +76,21 @@ app.controller('goodsController' ,function($scope,$controller   ,goodsService){
 			}			
 		);
 	}
+
+    //增加商品
+    $scope.add=function(){
+
+        goodsService.add( $scope.entity  ).success(
+            function(response){
+                if(response.success){
+                	alert("增加成功")
+					//清空表单
+                    $scope.entity={};
+                }else{
+                    alert(response.message);
+                }
+            }
+        );
+    }
     
 });	

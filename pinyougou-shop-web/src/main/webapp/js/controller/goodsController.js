@@ -2,7 +2,7 @@
 app.controller('goodsController' ,function($scope,$controller   ,goodsService){	
 	
 	$controller('baseController',{$scope:$scope});//继承
-	
+    $scope.entity = {goods:'', goodsDesc: {itemImages: [], specificationItems: []},itemList:[]};
     //读取列表数据绑定到表单中  
 	$scope.findAll=function(){
 		goodsService.findAll().success(
@@ -80,12 +80,18 @@ app.controller('goodsController' ,function($scope,$controller   ,goodsService){
     //增加商品
     $scope.add=function(){
 
+		// alert(editor.html());
+        $scope.entity.goodsDesc.introduction=editor.html();
+        alert( "introduction: "+$scope.entity.goodsDesc.introduction)
+
         goodsService.add( $scope.entity  ).success(
             function(response){
                 if(response.success){
                 	alert("增加成功")
 					//清空表单
                     $scope.entity={};
+                	//清空富文本编辑器
+                    editor.html("");
                 }else{
                     alert(response.message);
                 }

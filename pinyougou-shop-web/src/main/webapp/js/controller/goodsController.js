@@ -1,8 +1,9 @@
  //控制层 
-app.controller('goodsController' ,function($scope,$controller   ,goodsService){	
+app.controller('goodsController' ,function($scope,$controller,goodsService,uploadService){
 	
 	$controller('baseController',{$scope:$scope});//继承
     $scope.entity = {goods:'', goodsDesc: {itemImages: [], specificationItems: []},itemList:[]};
+    $scope.image_entity = {};
     //读取列表数据绑定到表单中  
 	$scope.findAll=function(){
 		goodsService.findAll().success(
@@ -98,5 +99,18 @@ app.controller('goodsController' ,function($scope,$controller   ,goodsService){
             }
         );
     }
-    
+
+    //上传图片
+    $scope.uploadFile=function () {
+        uploadService.uploadFile().success(
+            function (response) {
+                if (response.success) {
+                    $scope.image_entity.url = response.message;
+                } else {
+                    alert(response.message)
+                }
+            }
+        )
+
+    }
 });	

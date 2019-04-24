@@ -12,6 +12,7 @@
     <artifactId>pinyougou-shop-web</artifactId>
 <packaging>war</packaging>
     <dependencies>
+
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -83,6 +84,11 @@
         <dependency>
             <groupId>com.pinyougou</groupId>
             <artifactId>pinyougou-sellergoods-interface</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.pinyougou</groupId>
+            <artifactId>pinyougou-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <!--Spring-security-->

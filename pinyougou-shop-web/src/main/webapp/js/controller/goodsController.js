@@ -158,23 +158,26 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
         // alert(newValue);
         itemCatService.findOne(newValue).success(
             function (response) {
-                $scope.entity.goodsDesc.typeTemplateId = response.typeId;
+                $scope.entity.goods.typeTemplateId = response.typeId;
             }
         );
     });
 
     //读取模板Id后读取品牌列表
-    $scope.$watch('entity.goodsDesc.typeTemplateId',function (newValue, oldValue) {
+    $scope.$watch('entity.goods.typeTemplateId',function (newValue, oldValue) {
         // alert(newValue);
         typeTemplateService.findOne(newValue).success(
             function (response) {
                 $scope.typeTemplate = response;
-                alert($scope.typeTemplate.brandIds)
+                // alert($scope.typeTemplate.brandIds)
                 $scope.typeTemplate.brandIds = JSON.parse($scope.typeTemplate.brandIds);
+                $scope.entity.goodsDesc.customAttributeItems = JSON.parse($scope.typeTemplate.customAttributeItems);
+
 
             }
         );
     });
+
 
 
 });	

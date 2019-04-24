@@ -4,7 +4,7 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 	$controller('baseController',{$scope:$scope});//继承
     $scope.entity = {goods:'', goodsDesc: {itemImages: [], specificationItems: []},itemList:[]};
     $scope.image_entity = {};
-    //读取列表数据绑定到表单中  
+    //读取列表数据绑定到表单中
 	$scope.findAll=function(){
 		goodsService.findAll().success(
 			function(response){
@@ -113,4 +113,10 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
         )
 
     }
+    //将当前上传的图片实体存入列表
+    $scope.add_image_entity=function () {
+
+        $scope.entity.goodsDesc.itemImages.push($scope.image_entity);
+    }
+
 });	

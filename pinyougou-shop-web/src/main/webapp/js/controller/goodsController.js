@@ -1,5 +1,5 @@
  //控制层 
-app.controller('goodsController' ,function($scope,$controller,goodsService,uploadService,itemCatService,typeTemplateService){
+app.controller('goodsController' ,function($scope,$location,$controller,goodsService,uploadService,itemCatService,typeTemplateService){
 	
 	$controller('baseController',{$scope:$scope});//继承
     $scope.entity = {goods:'', goodsDesc: {itemImages: [], specificationItems: []},itemList:[]};
@@ -24,12 +24,17 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 	}
 	
 	//查询实体 
-	$scope.findOne=function(id){				
+	$scope.findOne=function(){
+        var id = $location.search()['id'];
+        // alert(id)
+        if (id == null) {
+            return;
+        }
 		goodsService.findOne(id).success(
 			function(response){
-				$scope.entity= response;					
+				$scope.entity= response;
 			}
-		);				
+		);
 	}
 	
 	//保存 

@@ -172,8 +172,12 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
                 // alert($scope.typeTemplate.brandIds)
                 $scope.typeTemplate.brandIds = JSON.parse($scope.typeTemplate.brandIds);
                 $scope.entity.goodsDesc.customAttributeItems = JSON.parse($scope.typeTemplate.customAttributeItems);
-
-
+            }
+        );
+        //读取规格列表
+        typeTemplateService.findSpecList(newValue).success(
+            function(response){
+                $scope.specList=response;
             }
         );
     });

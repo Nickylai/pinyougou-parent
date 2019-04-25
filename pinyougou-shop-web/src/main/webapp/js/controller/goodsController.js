@@ -227,10 +227,10 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
                 newList.push(newRow);
             }
         }
-
         return newList;
-
     }
+
+    $scope.status = ['未审核','已审核','审核未通过','已通过'];
 
 
 });	

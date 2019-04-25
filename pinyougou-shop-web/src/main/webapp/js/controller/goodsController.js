@@ -36,6 +36,10 @@ app.controller('goodsController' ,function($scope,$location,$controller,goodsSer
                 editor.html($scope.entity.goodsDesc.introduction);//商品介绍
                 //商品图片
                 $scope.entity.goodsDesc.itemImages = JSON.parse($scope.entity.goodsDesc.itemImages);
+                //扩展属性
+
+                    $scope.entity.goodsDesc.customAttributeItems = JSON.parse($scope.entity.goodsDesc.customAttributeItems);
+
 			}
 		);
 	}
@@ -181,7 +185,9 @@ app.controller('goodsController' ,function($scope,$location,$controller,goodsSer
                 $scope.typeTemplate = response;
                 // alert($scope.typeTemplate.brandIds)
                 $scope.typeTemplate.brandIds = JSON.parse($scope.typeTemplate.brandIds);
-                $scope.entity.goodsDesc.customAttributeItems = JSON.parse($scope.typeTemplate.customAttributeItems);
+                if ($location.search()['id'] == null) {//解决与现有产品查询出的结果冲突问题
+                    $scope.entity.goodsDesc.customAttributeItems = JSON.parse($scope.typeTemplate.customAttributeItems);
+                }
             }
         );
         //读取规格列表

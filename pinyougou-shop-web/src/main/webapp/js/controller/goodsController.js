@@ -165,6 +165,8 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 
     //读取模板Id后读取品牌列表
     $scope.$watch('entity.goods.typeTemplateId',function (newValue, oldValue) {
+    	//模板id改变后清空集合的内容
+        $scope.entity.goodsDesc.specificationItems = [];
         // alert(newValue);
         typeTemplateService.findOne(newValue).success(
             function (response) {
@@ -182,6 +184,53 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
         );
     });
 
+    $scope.updateSpecAttribute = function ($event,name, value) {
+        var object = $scope.searchObjectByKey($scope.entity.goodsDesc.specificationItems, 'attributeName', name);
+
+        if (object != null) {
+            if ($event.target.checked) {
+                object.attributeValue.push(value);
+            } else {
+                object.attributeValue.splice(
+                    object.attributeValue.indexOf(value),1
+				)
+                //如果选项都取消了，将此条记录移除
+                if(object.attributeValue.length==0){
+                    $scope.entity.goodsDesc.specificationItems.splice(
+                        $scope.entity.goodsDesc.specificationItems.indexOf(object),1);
+                }
+            }
+        } else {
+            $scope.entity.goodsDesc.specificationItems.push({"attributeName":name,"attributeValue":[value]});
+        }
+    };
+
+    //创建SKU
+	$scope.createItemList=function () {
+        $scope.entity.itemList = [{spec:{},price:0,num:99999,status:'0',isDefault:'0' }];//初始化
+        var items= $scope.entity.goodsDesc.specificationItems;
+        for (var i = 0; i < items.length; i++) {
+            $scope.entity.itemList= addColumn($scope.entity.itemList, items[i].attributeName, items[i].attributeValue);
+
+        }
+
+    }
+
+    addColumn=function (list,columnName,columnValues) {
+        var newList = [];
+
+        for (var i = 0; i < list.length; i++) {
+            var oldRow = list[i];
+            for (var j = 0; j < columnValues.length; j++) {
+                var newRow = JSON.parse(JSON.stringify(oldRow));
+                newRow.spec[columnName] = columnValues[j];
+                newList.push(newRow);
+            }
+        }
+
+        return newList;
+
+    }
 
 
 });	

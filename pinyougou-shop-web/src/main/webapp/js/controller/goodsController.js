@@ -33,6 +33,9 @@ app.controller('goodsController' ,function($scope,$location,$controller,goodsSer
 		goodsService.findOne(id).success(
 			function(response){
 				$scope.entity= response;
+                editor.html($scope.entity.goodsDesc.introduction);//商品介绍
+                //商品图片
+                $scope.entity.goodsDesc.itemImages = JSON.parse($scope.entity.goodsDesc.itemImages);
 			}
 		);
 	}

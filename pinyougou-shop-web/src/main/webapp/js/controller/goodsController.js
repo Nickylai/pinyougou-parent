@@ -54,8 +54,9 @@ app.controller('goodsController' ,function($scope,$location,$controller,goodsSer
 
 	//保存
 	$scope.save=function(){
-		var serviceObject;//服务层对象
-		if($scope.entity.id!=null){//如果有ID
+        $scope.entity.goodsDesc.introduction=editor.html();
+        var serviceObject;//服务层对象
+		if($scope.entity.goods.id!=null){//如果有ID
 			serviceObject=goodsService.update( $scope.entity ); //修改
 		}else{
 			serviceObject=goodsService.add( $scope.entity  );//增加
@@ -63,8 +64,12 @@ app.controller('goodsController' ,function($scope,$location,$controller,goodsSer
 		serviceObject.success(
 			function(response){
 				if(response.success){
-					//重新查询
-		        	$scope.reloadList();//重新加载
+                    alert("增加成功")
+                    //清空表单
+                    $scope.entity={};
+                    //清空富文本编辑器
+                    editor.html("");
+
 				}else{
 					alert(response.message);
 				}
@@ -98,27 +103,6 @@ app.controller('goodsController' ,function($scope,$location,$controller,goodsSer
 		);
 	}
 
-    //增加商品
-    $scope.add=function(){
-
-		// alert(editor.html());
-        $scope.entity.goodsDesc.introduction=editor.html();
-        alert( "introduction: "+$scope.entity.goodsDesc.introduction)
-
-        goodsService.add( $scope.entity  ).success(
-            function(response){
-                if(response.success){
-                	alert("增加成功")
-					//清空表单
-                    $scope.entity={};
-                	//清空富文本编辑器
-                    editor.html("");
-                }else{
-                    alert(response.message);
-                }
-            }
-        );
-    }
 
     //上传图片
     $scope.uploadFile=function () {

@@ -69,14 +69,21 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/update")
-	public Result update(@RequestBody TbGoods goods){
-		try {
-			goodsService.update(goods);
-			return new Result(true, "修改成功");
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new Result(false, "修改失败");
+	public Result update(@RequestBody Goods goods){
+		//商家id
+		String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
+		//判断商品是否是商家的商品
+		Goods one = goodsService.findOne(goods.getGoods().getId());
+		if (!one.getGoods().getSellerId().equals(sellerId)||!goods.getGoods().getSellerId().equals(sellerId)) {
+			return new Result(false, "非法操作");
 		}
+			try {
+				goodsService.update(goods);
+				return new Result(true, "修改成功");
+			} catch (Exception e) {
+				e.printStackTrace();
+				return new Result(false, "修改失败");
+			}
 	}	
 	
 	/**

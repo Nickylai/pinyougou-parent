@@ -74,36 +74,7 @@ public class GoodsServiceImpl implements GoodsService {
 		goods.getGoodsDesc().setGoodsId(goods.getGoods().getId());
 		goodsDescMapper.insert(goods.getGoodsDesc());
 
-		if ("1".equals(goods.getGoods().getIsEnableSpec())) {
-			for (TbItem item : goods.getItemList()) {
-				//构建标题SPU名称+规格选项
-				String title = goods.getGoods().getGoodsName();
-				Map<String ,Object> map = JSON.parseObject(item.getSpec());
-				for (String key : map.keySet()) {
-					title +=" "+ map.get(key);
-				}
-				item.setTitle(title);
-
-				setItemValues(goods,item);
-
-				itemMapper.insert(item);
-			}
-		} else {
-			TbItem item=new TbItem();
-			//商品 KPU+规格描述串作为SKU 名称
-			item.setTitle(goods.getGoods().getGoodsName());
-			//价格
-			item.setPrice( goods.getGoods().getPrice() );
-			//状态
-			item.setStatus("1");
-			//是否默认
-			item.setIsDefault("1");
-			//库存数量
-			item.setNum(99999);
-			item.setSpec("{}");
-			setItemValues(goods,item);
-			itemMapper.insert(item);
-		}
+        saveItemList(goods);
 
 
 
@@ -141,9 +112,53 @@ public class GoodsServiceImpl implements GoodsService {
 	 * 修改
 	 */
 	@Override
-	public void update(TbGoods goods){
-		goodsMapper.updateByPrimaryKey(goods);
-	}	
+	public void update(Goods goods){
+	    //更新基本表数据
+        goodsMapper.updateByPrimaryKey(goods.getGoods());
+        //更新goodsDesc表数据
+        goodsDescMapper.updateByPrimaryKey(goods.getGoodsDesc());
+
+        //删除原有的Sku
+        TbItemExample example=new TbItemExample();
+        TbItemExample.Criteria criteria = example.createCriteria();
+        criteria.andGoodsIdEqualTo(goods.getGoods().getId());
+        itemMapper.deleteByExample(example);
+        //插入新的SKU
+        saveItemList(goods);
+	}
+
+    private void saveItemList(Goods goods) {
+        if ("1".equals(goods.getGoods().getIsEnableSpec())) {
+            for (TbItem item : goods.getItemList()) {
+                //构建标题SPU名称+规格选项
+                String title = goods.getGoods().getGoodsName();
+                Map<String ,Object> map = JSON.parseObject(item.getSpec());
+                for (String key : map.keySet()) {
+                    title +=" "+ map.get(key);
+                }
+                item.setTitle(title);
+
+                setItemValues(goods,item);
+
+                itemMapper.insert(item);
+            }
+        } else {
+            TbItem item=new TbItem();
+            //商品 KPU+规格描述串作为SKU 名称
+            item.setTitle(goods.getGoods().getGoodsName());
+            //价格
+            item.setPrice( goods.getGoods().getPrice() );
+            //状态
+            item.setStatus("1");
+            //是否默认
+            item.setIsDefault("1");
+            //库存数量
+            item.setNum(99999);
+            item.setSpec("{}");
+            setItemValues(goods,item);
+            itemMapper.insert(item);
+        }
+    }
 	
 	/**
 	 * 根据ID获取实体

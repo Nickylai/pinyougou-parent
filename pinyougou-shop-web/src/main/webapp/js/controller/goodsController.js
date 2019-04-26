@@ -64,12 +64,12 @@ app.controller('goodsController' ,function($scope,$location,$controller,goodsSer
 		serviceObject.success(
 			function(response){
 				if(response.success){
-                    alert("增加成功")
+                    alert("保存成功")
                     //清空表单
                     $scope.entity={};
                     //清空富文本编辑器
                     editor.html("");
-
+                    location.href = 'goods.html';
 				}else{
 					alert(response.message);
 				}

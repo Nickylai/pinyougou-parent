@@ -110,5 +110,7 @@ public class ContentController {
 	public PageResult search(@RequestBody TbContent content, int page, int rows  ){
 		return contentService.findPage(content, page, rows);		
 	}
+
+
 	
 }

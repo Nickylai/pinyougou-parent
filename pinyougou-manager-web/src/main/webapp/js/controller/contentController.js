@@ -1,5 +1,5 @@
  //控制层 
-app.controller('contentController' ,function($scope,$controller   ,contentService){	
+app.controller('contentController' ,function($scope,$controller,contentService,uploadService ,contentCategoryService){
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -76,5 +76,32 @@ app.controller('contentController' ,function($scope,$controller   ,contentServic
 			}			
 		);
 	}
-    
+
+    //上传图片
+    $scope.uploadFile=function () {
+        uploadService.uploadFile().success(
+            function (response) {
+                if (response.success) {
+                    $scope.entity.pic= response.message;
+                } else {
+                    alert(response.message)
+                }
+            }
+        ).error(
+        	function () {
+				alert("上传出错！")
+            }
+		)
+
+    }
+
+    $scope.contentCategoryList = [];
+    //查询项目类型id
+    $scope.findContentCategoryList=function () {
+		contentCategoryService.findAll().success(
+			function (response) {
+                $scope.contentCategoryList = response;
+            }
+		)
+    }
 });	

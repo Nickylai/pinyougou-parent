@@ -55,6 +55,7 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,itemC
 	//批量删除
 	$scope.dele=function(){
 		//获取选中的复选框
+		alert($scope.selectIds)
 		goodsService.dele( $scope.selectIds ).success(
 			function(response){
 				if(response.success){
@@ -95,7 +96,7 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,itemC
 
     //更改状态
     $scope.updateStatus=function(status){
-    	alert($scope.selectIds)
+    	// alert($scope.selectIds)
         goodsService.updateStatus($scope.selectIds,status).success(
             function(response){
                 if(response.success){//成功

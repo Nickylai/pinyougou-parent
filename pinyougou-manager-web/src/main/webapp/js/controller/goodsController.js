@@ -93,4 +93,19 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,itemC
 
     }
 
+    //更改状态
+    $scope.updateStatus=function(status){
+    	alert($scope.selectIds)
+        goodsService.updateStatus($scope.selectIds,status).success(
+            function(response){
+                if(response.success){//成功
+                    $scope.reloadList();//刷新列表
+                    $scope.selectIds=[];//清空 ID 集合
+                }else{
+                    alert(response.message);
+                }
+            }
+        );
+    }
+
 });	

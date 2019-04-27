@@ -35,4 +35,6 @@ app.service('goodsService',function($http){
         return $http.get('../goods/updateStatus.do?ids=' + ids + "&status=" + status);
 
     }
+
+
 });

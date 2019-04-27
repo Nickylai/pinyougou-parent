@@ -60,10 +60,16 @@ public interface GoodsService {
 	public PageResult findPage(TbGoods goods, int pageNum, int pageSize);
 
 	/**
-	 * 修改状态
+	 * 修改审核状态
 	 * @param ids 数组
 	 * @param status 状态
 	 */
 	public void updateStatus(Long[] ids,String status);
-	
+
+	/**
+	 * 修改上架状态
+	 * @param ids 数组
+	 * @param status 上架状态
+	 */
+	public void updateMarketStatus(Long[] ids, String status);
 }

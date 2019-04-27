@@ -216,7 +216,7 @@ app.controller('goodsController' ,function($scope,$location,$controller,goodsSer
 
     //创建SKU
 	$scope.createItemList=function () {
-        $scope.entity.itemList = [{spec:{},price:0,num:99999,status:'0',isDefault:'0' }];//初始化
+        $scope.entity.itemList = [{spec:{},price:0,num:99999,status:'0',marketStatus:'1',isDefault:'0' }];//初始化
         var items= $scope.entity.goodsDesc.specificationItems;
         for (var i = 0; i < items.length; i++) {
             $scope.entity.itemList= addColumn($scope.entity.itemList, items[i].attributeName, items[i].attributeValue);
@@ -240,6 +240,7 @@ app.controller('goodsController' ,function($scope,$location,$controller,goodsSer
     }
 
     $scope.status = ['未审核','已审核','审核未通过','已通过'];
+    $scope.marketStatus = ['已下架', '上架销售中'];
 
     $scope.itemCatList = [];
 
@@ -270,4 +271,17 @@ app.controller('goodsController' ,function($scope,$location,$controller,goodsSer
         }
     }
 
+    //更改上架状态
+    $scope.updateMarketStatus=function (status) {
+	    goodsService.updateMarketStatus($scope.selectIds,status).success(
+	        function (response) {
+                if (response.success) {
+                    $scope.reloadList();
+                    $scope.specList = [];
+                } else {
+                    alert(response.message);
+                }
+            }
+        )
+    }
 });	

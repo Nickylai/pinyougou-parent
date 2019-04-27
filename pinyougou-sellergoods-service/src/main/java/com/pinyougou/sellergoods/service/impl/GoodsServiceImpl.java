@@ -252,4 +252,13 @@ public class GoodsServiceImpl implements GoodsService {
 
 		}
 	}
+
+	@Override
+	public void updateMarketStatus(Long[] ids, String status) {
+		for (Long id : ids) {
+			TbGoods goods = goodsMapper.selectByPrimaryKey(id);
+			goods.setIsMarketable(status);
+			goodsMapper.updateByPrimaryKey(goods);
+		}
+	}
 }

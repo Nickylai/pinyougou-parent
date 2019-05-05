@@ -1,10 +1,12 @@
 package com.pinyougou.pojo;
 
 import org.apache.solr.client.solrj.beans.Field;
+import org.springframework.data.solr.core.mapping.Dynamic;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @author Nickylai
@@ -61,6 +63,18 @@ public class TbItem implements Serializable {
     private String brand;
 
     private String spec;
+
+    @Dynamic
+    @Field("item_spec_*")
+    private Map<String,String> specMap;
+
+    public Map<String, String> getSpecMap() {
+        return specMap;
+    }
+
+    public void setSpecMap(Map<String, String> specMap) {
+        this.specMap = specMap;
+    }
 
     @Field("item_seller")
     private String seller;

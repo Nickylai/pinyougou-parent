@@ -18,6 +18,11 @@
             <version>1.5.5.RELEASE</version>
         </dependency>
         <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.28</version>
+        </dependency>
+        <dependency>
             <groupId>com.pinyougou</groupId>
             <artifactId>pinyougou-dao</artifactId>
             <version>0.0.1-SNAPSHOT</version>
@@ -27,6 +32,7 @@
             <artifactId>pinyougou-pojo</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>

@@ -6,6 +6,7 @@ import com.pinyougou.pojo.TbItemExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,6 +20,8 @@ import java.util.List;
  */
 @Component
 public class SolrUtil {
+    @Autowired
+    private SolrTemplate solrTemplate;
 
     @Autowired
     private TbItemMapper itemMapper;
@@ -32,7 +35,10 @@ public class SolrUtil {
         System.out.println("--------商品列表---------");
         for (TbItem item : itemList) {
             System.out.println(item.getId()+" "+item.getTitle()+" "+item.getPrice());
+
         }
+        solrTemplate.saveBeans(itemList);
+        solrTemplate.commit();
         System.out.println("------------结束------------");
     }
 

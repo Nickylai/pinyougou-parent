@@ -1,16 +1,25 @@
 package com.pinyougou.pojo;
 
+import org.apache.solr.client.solrj.beans.Field;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * @author Nickylai
+ */
 public class TbItem implements Serializable {
+
+    @Field
     private Long id;
 
+    @Field("item_title")
     private String title;
 
     private String sellPoint;
 
+    @Field("item_price")
     private BigDecimal price;
 
     private Integer stockCount;
@@ -19,6 +28,7 @@ public class TbItem implements Serializable {
 
     private String barcode;
 
+    @Field("item_image")
     private String image;
 
     private Long categoryid;
@@ -37,18 +47,22 @@ public class TbItem implements Serializable {
 
     private String isDefault;
 
+    @Field("item_goodsid")
     private Long goodsId;
 
     private String sellerId;
 
     private String cartThumbnail;
 
+    @Field("item_category")
     private String category;
 
+    @Field("item_brand")
     private String brand;
 
     private String spec;
 
+    @Field("item_seller")
     private String seller;
 
     public Long getId() {
@@ -233,5 +247,34 @@ public class TbItem implements Serializable {
 
     public void setSeller(String seller) {
         this.seller = seller == null ? null : seller.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "TbItem{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", sellPoint='" + sellPoint + '\'' +
+                ", price=" + price +
+                ", stockCount=" + stockCount +
+                ", num=" + num +
+                ", barcode='" + barcode + '\'' +
+                ", image='" + image + '\'' +
+                ", categoryid=" + categoryid +
+                ", status='" + status + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", itemSn='" + itemSn + '\'' +
+                ", costPirce=" + costPirce +
+                ", marketPrice=" + marketPrice +
+                ", isDefault='" + isDefault + '\'' +
+                ", goodsId=" + goodsId +
+                ", sellerId='" + sellerId + '\'' +
+                ", cartThumbnail='" + cartThumbnail + '\'' +
+                ", category='" + category + '\'' +
+                ", brand='" + brand + '\'' +
+                ", spec='" + spec + '\'' +
+                ", seller='" + seller + '\'' +
+                '}';
     }
 }

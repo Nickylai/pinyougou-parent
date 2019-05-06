@@ -22,4 +22,15 @@ app.controller('searchController', function ($scope,searchService) {
         }
     }
 
+    //撤销搜索项
+    $scope.removeSearchItem=function (key) {
+        if (key == 'category' || key == 'brand') {
+            //如果用户点击的是品牌或分类
+            $scope.searchMap[key] = '';
+        } else {
+            //用户点击的是规格
+           delete $scope.searchMap.spec[key] ;
+        }
+    }
+
 });

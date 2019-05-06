@@ -65,8 +65,18 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         //为查询对象设置高亮
         query.setHighlightOptions(highlightOptions);
 
+        //1.1关键字查询
         Criteria criteria = new Criteria("item_keywords").is(searchMap.get("keywords"));
         query.addCriteria(criteria);
+
+        //1.2按照商品分类过滤
+        if (!"".equals(searchMap.get("category"))) {
+            FilterQuery filterQuery=new SimpleFilterQuery();
+            Criteria filterCriteria=new Criteria("item_category").is(searchMap.get("category"));
+            filterQuery.addCriteria(filterCriteria);
+            query.addFilterQuery(filterQuery);
+        }
+
 
         //高亮页对象
         HighlightPage<TbItem> page = solrTemplate.queryForHighlightPage(query, TbItem.class);

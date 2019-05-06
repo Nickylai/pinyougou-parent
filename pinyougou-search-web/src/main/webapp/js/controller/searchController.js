@@ -20,6 +20,8 @@ app.controller('searchController', function ($scope,searchService) {
             //用户点击的是规格
             $scope.searchMap.spec[key] = value;
         }
+        //根据改变后的条件查询
+        $scope.search();
     }
 
     //撤销搜索项
@@ -31,6 +33,8 @@ app.controller('searchController', function ($scope,searchService) {
             //用户点击的是规格
            delete $scope.searchMap.spec[key] ;
         }
+        //根据改变后的条件查询
+        $scope.search();
     }
 
 });

@@ -5,6 +5,7 @@ import com.pinyougou.pojo.TbItem;
 import com.pinyougou.search.service.ItemSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.*;
 import org.springframework.data.solr.core.query.result.*;
@@ -39,7 +40,13 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         //1.查询列表
         map.putAll(searchList(searchMap));
         //2.分组查询商品分类列表
-        map.put("categoryList",searchCategoryList(searchMap));
+        List<String> categoryList = searchCategoryList(searchMap);
+        map.put("categoryList",categoryList);
+        //3.查询品牌列表和规格列表
+        if (categoryList.size() > 0) {
+            map.putAll(searchBrandAndSpecList(categoryList.get(0)));
+        }
+
         return map;
     }
     /**
@@ -88,6 +95,7 @@ public class ItemSearchServiceImpl implements ItemSearchService {
      * 分组查询
      */
     private List<String> searchCategoryList(Map searchMap) {
+
         List<String> list = new ArrayList<>();
         Query query=new SimpleQuery("*:*");
         //关键字查询，相当于sql的where查询
@@ -113,5 +121,26 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         }
 
         return list;
+    }
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+    /**
+     * 查询品牌和规格列表
+     * @return
+     */
+    private Map searchBrandAndSpecList(String category) {
+        Map map = new HashMap();
+        //1.根据商品分类名称得到模板id
+        Long templateId = (Long) redisTemplate.boundHashOps("itemCat").get(category);
+        if (templateId != null) {
+            //2.根据模板id或的品牌列表
+            List brandList = (List) redisTemplate.boundHashOps("brandList").get(templateId);
+            map.put("brandList",brandList);
+            //3.根据模板id获得规格列表
+            List specList = (List) redisTemplate.boundHashOps("specList").get(templateId);
+            map.put("specList", specList);
+        }
+        return map;
     }
 }

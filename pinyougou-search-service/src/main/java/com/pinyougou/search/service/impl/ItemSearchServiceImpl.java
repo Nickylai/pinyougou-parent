@@ -70,9 +70,19 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         query.addCriteria(criteria);
 
         //1.2按照商品分类过滤
-        if (!"".equals(searchMap.get("category"))) {
+        String category = "category";
+        if (!"".equals(searchMap.get(category))) {
             FilterQuery filterQuery=new SimpleFilterQuery();
             Criteria filterCriteria=new Criteria("item_category").is(searchMap.get("category"));
+            filterQuery.addCriteria(filterCriteria);
+            query.addFilterQuery(filterQuery);
+        }
+
+        //1.3品牌过滤
+        String brand = "brand";
+        if (!"".equals(searchMap.get(brand))) {
+            FilterQuery filterQuery=new SimpleFilterQuery();
+            Criteria filterCriteria=new Criteria("item_brand").is(searchMap.get("brand"));
             filterQuery.addCriteria(filterCriteria);
             query.addFilterQuery(filterQuery);
         }

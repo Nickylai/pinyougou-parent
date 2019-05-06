@@ -1,10 +1,17 @@
 .idea
 *.iml
 
-pinyougou-common/target/
-pinyougou-dao/target/
-pinyougou-manager-web/target/
-pinyougou-pojo/target/
-pinyougou-sellergoods-interface/target/
-pinyougou-sellergoods-service/target/
-pinyougou-shop-web/target/
+/pinyougou-common/target/
+/pinyougou-dao/target/
+/pinyougou-manager-web/target/
+/pinyougou-pojo/target/
+/pinyougou-sellergoods-interface/target/
+/pinyougou-sellergoods-service/target/
+/pinyougou-shop-web/target/
+/pinyougou-search-web/target
+/pinyougou-search-service/target
+/pinyougou-search-interface/target
+/pinyougou-solr-util/target/
+/pinyougou-content-interface/target/
+/pinyougou-content-service/target/
+/pinyougou-portal-web/target/

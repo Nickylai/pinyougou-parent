@@ -87,6 +87,18 @@ public class ItemSearchServiceImpl implements ItemSearchService {
             query.addFilterQuery(filterQuery);
         }
 
+        //1.4规格过滤
+        String spec="spec";
+        if (searchMap.get(spec)!=null) {
+            Map<String,String> specMap = (Map<String,String>) searchMap.get(spec);
+            for (String key : specMap.keySet()) {
+                FilterQuery filterQuery=new SimpleFilterQuery();
+                Criteria filterCriteria=new Criteria("item_spec_"+key).is(specMap.get(key));
+                filterQuery.addCriteria(filterCriteria);
+                query.addFilterQuery(filterQuery);
+            }
+        }
+
 
         //高亮页对象
         HighlightPage<TbItem> page = solrTemplate.queryForHighlightPage(query, TbItem.class);

@@ -14,10 +14,26 @@ app.controller('searchController', function ($scope,searchService) {
     //构建页码标签
     buildPageLable = function () {
         $scope.pageLabel = [];
-        for (var i = 1; i < $scope.resultMap.totalPages; i++) {
+        var firstPage = 1;//开始页码
+        var endPage = $scope.resultMap.totalPages;//截止页码
+
+        if ($scope.resultMap.totalPages> 5) {
+            if ($scope.searchMap.pageNo <= 3) {
+                endPage = 5;
+            }else if ($scope.searchMap.pageNo >= $scope.resultMap.totalPages - 2) {
+                firstPage = $scope.resultMap.totalPages - 4;
+            } else {
+                firstPage = $scope.searchMap.pageNo - 2;
+                endPage = $scope.searchMap.pageNo + 2;
+            }
+        }
+
+        for (var i = firstPage; i <=endPage; i++) {
             $scope.pageLabel.push(i);
         }
     };
+
+
 
     //添加搜索项 改变searchMap的值
     $scope.addSearchItem=function (key,value) {
@@ -45,6 +61,13 @@ app.controller('searchController', function ($scope,searchService) {
         $scope.search();
     }
 
-    //
+    //根据分页查询
+    $scope.queryByPage=function (pageNo) {
+        if (pageNo < 1||pageNo>$scope.resultMap.totalPages) {
+
+        }
+        $scope.searchMap.pageNo = pageNo;
+        $scope.search();
+    }
 
 });

@@ -31,6 +31,9 @@ public class ItemSearchServiceImpl implements ItemSearchService {
     @Override
     public Map<String, String> search(Map searchMap) {
         Map map = new HashMap();
+        //空格处理
+        String keywords = (String) searchMap.get("keywords");
+        searchMap.put("keywords", keywords.replace(" ", ""));
 //        Query query = new SimpleQuery("*:*");
 //        Criteria criteria = new Criteria("item_keywords").is(searchMap.get("keywords"));
 //        query.addCriteria(criteria);

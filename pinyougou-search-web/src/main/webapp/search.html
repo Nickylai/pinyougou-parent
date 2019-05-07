@@ -319,11 +319,11 @@
 							<li class="prev {{isTopPage()?'disabled':''}} ">
 								<a href="#" ng-click="queryByPage(searchMap.pageNo-1)" >«</a>
 							</li>
-							<li class="dotted" ng-if="isTopPage()==false"><span>...</span></li>
+							<li class="dotted" ng-if="searchMap.pageNo>3"><span>...</span></li>
 							<li class="{{(page==searchMap.pageNo)?'active':''}}" ng-repeat="page in pageLabel">
 								<a href="#" ng-click="queryByPage(page)">{{page}}</a>
 							</li>
-							<li class="dotted " ng-if="isEndPage() == false"><span>...</span></li>
+							<li class="dotted " ng-if="searchMap.pageNo<resultMap.totalPages-2"><span>...</span></li>
 							<li class="next {{isEndPage()?'disabled':''}}">
 								<a href="#" ng-click="queryByPage(searchMap.pageNo+1)" >»</a>
 							</li>

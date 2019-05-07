@@ -1,6 +1,6 @@
 app.controller('searchController', function ($scope,searchService) {
     //定义搜索对象的结构
-    $scope.searchMap = {'keywords': '', 'category': '','brand':'','spec':{}};
+    $scope.searchMap = {'keywords': '', 'category': '','brand':'','spec':{},'price':''};
 
     //搜索
     $scope.search=function () {
@@ -13,7 +13,7 @@ app.controller('searchController', function ($scope,searchService) {
 
     //添加搜索项 改变searchMap的值
     $scope.addSearchItem=function (key,value) {
-        if (key == 'category' || key == 'brand') {
+        if (key == 'category' || key == 'brand'||key=='price') {
             //如果用户点击的是品牌或分类
             $scope.searchMap[key] = value;
         } else {
@@ -26,7 +26,7 @@ app.controller('searchController', function ($scope,searchService) {
 
     //撤销搜索项
     $scope.removeSearchItem=function (key) {
-        if (key == 'category' || key == 'brand') {
+        if (key == 'category' || key == 'brand'||key=='price') {
             //如果用户点击的是品牌或分类
             $scope.searchMap[key] = '';
         } else {
@@ -36,5 +36,7 @@ app.controller('searchController', function ($scope,searchService) {
         //根据改变后的条件查询
         $scope.search();
     }
+
+    //
 
 });

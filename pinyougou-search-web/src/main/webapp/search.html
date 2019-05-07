@@ -316,15 +316,15 @@
 				<div class="fr page">
 					<div class="sui-pagination pagination-large">
 						<ul>
-							<li class="prev disabled">
-								<a href="#" ng-click="queryByPage(searchMap.pageNo-1)" ng-if="searchMap.pageNo!=1">«上一页</a>
+							<li class="prev {{isTopPage()?'disabled':''}} ">
+								<a href="#" ng-click="queryByPage(searchMap.pageNo-1)" ng-if="searchMap.pageNo!=1">«</a>
 							</li>
-							<li class="active" ng-repeat="page in pageLabel">
+							<li class="{{(page==searchMap.pageNo)?'active':''}}" ng-repeat="page in pageLabel">
 								<a href="#" ng-click="queryByPage(page)">{{page}}</a>
 							</li>
 							<li class="dotted"><span>...</span></li>
-							<li class="next">
-								<a href="#" ng-click="queryByPage(searchMap.pageNo+1)" ng-if="searchMap.pageNo!=resultMap.totalPages">下一页»</a>
+							<li class="next {{isEndPage()?'disabled':''}}">
+								<a href="#" ng-click="queryByPage(searchMap.pageNo+1)" ng-if="searchMap.pageNo!=resultMap.totalPages">»</a>
 							</li>
 						</ul>
 						<div><span>共{{resultMap.totalPages}}页&nbsp;</span><span>

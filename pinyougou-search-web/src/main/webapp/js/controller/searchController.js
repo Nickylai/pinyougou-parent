@@ -45,6 +45,8 @@ app.controller('searchController', function ($scope,searchService) {
             //用户点击的是规格
             $scope.searchMap.spec[key] = value;
         }
+        //重置查询页码
+        $scope.searchMap.pageNo = 1;
         //根据改变后的条件查询
         $scope.search();
     }
@@ -58,6 +60,8 @@ app.controller('searchController', function ($scope,searchService) {
             //用户点击的是规格
            delete $scope.searchMap.spec[key] ;
         }
+        //重置查询页码
+        $scope.searchMap.pageNo = 1;
         //根据改变后的条件查询
         $scope.search();
     }
@@ -65,10 +69,26 @@ app.controller('searchController', function ($scope,searchService) {
     //根据分页查询
     $scope.queryByPage=function (pageNo) {
         if (pageNo < 1||pageNo>$scope.resultMap.totalPages) {
-
         }
         $scope.searchMap.pageNo = pageNo;
         $scope.search();
+    }
+
+    //判断当前页是否是首页
+    $scope.isTopPage=function () {
+        if ($scope.searchMap.pageNo == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    //判断当前页是否是尾页
+    $scope.isEndPage=function () {
+        if ($scope.searchMap.pageNo == $scope.resultMap.totalPages) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 });

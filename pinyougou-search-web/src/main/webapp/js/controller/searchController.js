@@ -1,15 +1,23 @@
 app.controller('searchController', function ($scope,searchService) {
     //定义搜索对象的结构
-    $scope.searchMap = {'keywords': '', 'category': '','brand':'','spec':{},'price':''};
+    $scope.searchMap = {'keywords': '', 'category': '','brand':'','spec':{},'price':'','pageNo':1,'pageSize':40};
 
     //搜索
     $scope.search=function () {
         searchService.search($scope.searchMap).success(
             function (response) {
                 $scope.resultMap = response;
+                buildPageLable();
             }
         );
     }
+    //构建页码标签
+    buildPageLable = function () {
+        $scope.pageLabel = [];
+        for (var i = 1; i < $scope.resultMap.totalPages; i++) {
+            $scope.pageLabel.push(i);
+        }
+    };
 
     //添加搜索项 改变searchMap的值
     $scope.addSearchItem=function (key,value) {

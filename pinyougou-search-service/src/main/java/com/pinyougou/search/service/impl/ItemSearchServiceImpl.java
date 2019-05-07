@@ -162,7 +162,7 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         //查询结果
         map.put("rows", page.getContent());
         //分页查询后的总页数
-        map.put("totalPage", page.getTotalPages());
+        map.put("totalPages", page.getTotalPages());
         //分页查询的总记录数
         map.put("totalElements", page.getTotalElements());
 

@@ -46,6 +46,7 @@
 					<li>
 						<a href="#">${itemCat3}</a>
 					</li>
+                    {{specificationItems}}
 				</ul>
 			</div>
 			<!--product-info-->
@@ -131,8 +132,14 @@
 								</div>
 								</dt>
                                 <#list spec.attributeValue as item>
-								<dd><a href="javascript:;" >${item}</a></dd>
+								<dd><a
+                                            class="{{isSelected('${spec.attributeName}','${item}')?'selected':''}}"
+                                            ng-click="selectSpecification('${spec.attributeName}','${item}')">
+                                        ${item}
+                                        <span title="点击取消选择">&nbsp;</span>
+                                    </a></dd>
                                 </#list>
+
 							</dl>
                             </#list>
 						</div>

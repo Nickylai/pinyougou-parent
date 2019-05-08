@@ -31,15 +31,14 @@
 			<div class="crumb-wrap">
 				<ul class="sui-breadcrumb">
 					<li>
-						<a href="#">手机、数码、通讯</a>
+						<a href="#">${itemCat1}</a>
 					</li>
 					<li>
-						<a href="#">手机</a>
+						<a href="#">${itemCat2}</a>
 					</li>
 					<li>
-						<a href="#">Apple苹果</a>
+						<a href="#">${itemCat3}</a>
 					</li>
-					<li class="active">iphone 6S系类</li>
 				</ul>
 			</div>
 			<!--product-info-->
@@ -93,8 +92,7 @@
 							</div>
 							<div class="fl fix-width">
 								<i class="red-bg">加价购</i>
-								<em class="t-gray">满999.00另加20.00元，或满1999.00另加30.00元，或满2999.00另加40.00元，即可在购物车换
-购热销商品</em>
+								<em class="t-gray">满999.00另加20.00元，或满1999.00另加30.00元，或满2999.00另加40.00元，即可在购物车换购热销商品</em>
 							</div>
 						</div>
 					</div>

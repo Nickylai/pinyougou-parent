@@ -137,6 +137,10 @@ public class GoodsController {
                 } else {
                     System.out.println("没有明细数据");
                 }
+                //生成商品详情页
+                for (Long id : ids) {
+                    itemPageService.genItemHtml(id);
+                }
             }
 
             return new Result(true, "成功");
@@ -149,7 +153,6 @@ public class GoodsController {
 
     @Reference(timeout = 5000)
     private ItemPageService itemPageService;
-
     @RequestMapping("/genHtml")
     public void genHtml(Long goodsId) {
         itemPageService.genItemHtml(goodsId);

@@ -58,7 +58,7 @@
 					<li>
 						<a href="#">${itemCat3}</a>
 					</li>
-                    {{specificationItems}}
+                    <#--{{specificationItems}}-->
 				</ul>
 			</div>
 			<!--product-info-->

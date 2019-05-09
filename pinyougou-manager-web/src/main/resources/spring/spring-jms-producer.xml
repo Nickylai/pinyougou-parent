@@ -38,9 +38,13 @@
 		<constructor-arg value="pinyougou_queue_solr_delete"/>
 	</bean>
 	
-	<!--这个是订阅模式  文本信息-->  
-	<bean id="topicTextDestination" class="org.apache.activemq.command.ActiveMQTopic">  
-	    <constructor-arg value="topic_text"/>  
-	</bean>  
-	
+	<!--这个是订阅模式增加详情页文本信息-->
+	<bean id="topicPageDestination" class="org.apache.activemq.command.ActiveMQTopic">
+	    <constructor-arg value="pinyougou_topic_page"/>
+	</bean>
+	<!--这个是订阅模式删除详情页文本信息-->
+	<bean id="topicPageDeleteDestination" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg value="pinyougou_topic_page-delete"/>
+	</bean>
+
 </beans>

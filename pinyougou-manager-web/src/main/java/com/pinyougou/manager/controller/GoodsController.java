@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
-import com.pinyougou.page.service.ItemPageService;
+
 import com.pinyougou.pojo.TbItem;
 import com.pinyougou.pojogroup.Goods;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +89,8 @@ public class GoodsController {
 
     @Autowired
     private Destination queueSolrDeleteDestination;
+    @Autowired
+    private Destination topicPageDeleteDestination;
     /**
      * 批量删除
      *
@@ -100,12 +102,22 @@ public class GoodsController {
         try {
             goodsService.delete(ids);
 //            itemSearchService.deleteByGoodsIds(Arrays.asList(ids));
+            //删除商品的solr索引
             jmsTemplate.send(queueSolrDeleteDestination, new MessageCreator() {
                 @Override
                 public Message createMessage(Session session) throws JMSException {
                     return session.createObjectMessage(ids);
                 }
             });
+            //删除商品的详情页
+            jmsTemplate.send(topicPageDeleteDestination, new MessageCreator() {
+                @Override
+                public Message createMessage(Session session) throws JMSException {
+                    return session.createObjectMessage(ids);
+                }
+            });
+
+
 
             return new Result(true, "删除成功");
         } catch (Exception e) {
@@ -134,7 +146,8 @@ public class GoodsController {
     private JmsTemplate jmsTemplate;
     @Autowired
     private Destination queueSolrDestination;
-
+    @Autowired
+    private Destination topicPageDestination;
     /**
      * 修改状态
      *
@@ -166,9 +179,16 @@ public class GoodsController {
                     System.out.println("没有明细数据");
                 }
                 //生成商品详情页
-//                for (Long id : ids) {
+                for (final Long id : ids) {
 //                    itemPageService.genItemHtml(id);
-//                }
+                    jmsTemplate.send(topicPageDestination, new MessageCreator() {
+                        @Override
+                        public Message createMessage(Session session) throws JMSException {
+                            return session.createTextMessage(String.valueOf(id));
+                        }
+                    });
+                }
+
             }
 
             return new Result(true, "成功");
@@ -179,12 +199,21 @@ public class GoodsController {
 
     }
 
-    @Reference(timeout = 5000)
-    private ItemPageService itemPageService;
-    @RequestMapping("/genHtml")
-    public void genHtml(Long goodsId) {
-        itemPageService.genItemHtml(goodsId);
 
+    //    @Reference(timeout = 5000)
+//    private ItemPageService itemPageService;
+
+
+    @RequestMapping("/genHtml")
+    public void genHtml(final Long goodsId) {
+//        itemPageService.genItemHtml(goodsId);
+        //发送消息到page-service
+        jmsTemplate.send(topicPageDestination, new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+                return session.createTextMessage(goodsId.toString());
+            }
+        });
     }
 
 

@@ -1,5 +1,8 @@
 package com.pinyougou.user.service.impl;
+import java.util.Date;
 import java.util.List;
+
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
@@ -46,6 +49,14 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public void add(TbUser user) {
+		//创建日期
+		user.setCreated(new Date());
+		//修改日期
+		user.setUpdated(new Date());
+		//对密码加密
+		String password = DigestUtils.md5Hex(user.getPassword());
+		user.setPassword(password);
+
 		userMapper.insert(user);		
 	}
 

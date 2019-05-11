@@ -49,7 +49,12 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("/add")
-	public Result add(@RequestBody TbUser user){
+	public Result add(@RequestBody TbUser user,String smscode){
+
+		boolean checkSmsCode = userService.checkSmsCode(user.getPhone(), smscode);
+		if (!checkSmsCode) {
+			return new Result(false, "验证码不正确！");
+		}
 		try {
 			userService.add(user);
 			return new Result(true, "增加成功");

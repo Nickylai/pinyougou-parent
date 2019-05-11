@@ -15,6 +15,7 @@ import com.pinyougou.user.service.UserService;
 
 import entity.PageResult;
 import org.springframework.data.redis.core.RedisTemplate;
+import util.CreateCode;
 
 /**
  * 服务实现层
@@ -153,10 +154,24 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void createSmsCode(String phone) {
 		//生成一个6位随机数
-		String code =(long) (Math.random() * 1000000)+"";
-		System.out.println(code);
+//		String code =(long) (Math.random() * 1000000)+"";
+		List<String> strings = CreateCode.genCodes(6, 1);
+		String code = strings.get(0);
+		System.out.println("验证码："+code);
 		//放入redis
 		redisTemplate.boundHashOps("smscode").put(phone,code);
 		//将短信发送到activeMQ
+	}
+
+	@Override
+	public boolean checkSmsCode(String phone, String code) {
+		String  smscode = (String) redisTemplate.boundHashOps("smscode").get(phone);
+		if (smscode == null) {
+			return false;
+		}
+		if (!smscode.equals(code)) {
+			return false;
+		}
+		return true;
 	}
 }

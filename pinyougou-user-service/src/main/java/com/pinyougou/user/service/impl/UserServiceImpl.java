@@ -53,6 +53,8 @@ public class UserServiceImpl implements UserService {
 		user.setCreated(new Date());
 		//修改日期
 		user.setUpdated(new Date());
+		//注册来源
+		user.setSourceType("1");
 		//对密码加密
 		String password = DigestUtils.md5Hex(user.getPassword());
 		user.setPassword(password);

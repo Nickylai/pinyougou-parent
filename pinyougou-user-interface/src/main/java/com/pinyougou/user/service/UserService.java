@@ -57,5 +57,12 @@ public interface UserService {
 	 * @return
 	 */
 	public PageResult findPage(TbUser user, int pageNum, int pageSize);
+
+
+	/**
+	 * 发送验证码
+	 * @param phone 手机号
+	 */
+	public void createSmsCode(String phone);
 	
 }

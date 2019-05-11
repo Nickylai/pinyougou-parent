@@ -10,6 +10,8 @@ import com.pinyougou.user.service.UserService;
 
 import entity.PageResult;
 import entity.Result;
+import util.PhoneFormatCheckUtils;
+
 /**
  * controller
  * @author Administrator
@@ -109,6 +111,25 @@ public class UserController {
 	@RequestMapping("/search")
 	public PageResult search(@RequestBody TbUser user, int page, int rows  ){
 		return userService.findPage(user, page, rows);		
+	}
+
+	@RequestMapping("/sendCode")
+	public Result sendCode(String phone) {
+
+		if (!PhoneFormatCheckUtils.isPhoneLegal(phone)) {
+			return new Result(false, "手机号码不合法！");
+		}
+		try {
+			userService.createSmsCode(phone);
+			return new Result(true, "验证码发送成功！");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(false, "验证码发送失败！");
+
+		}
+
+
+
 	}
 	
 }

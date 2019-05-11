@@ -1,7 +1,10 @@
 package com.pinyougou.user.service.impl;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
@@ -14,8 +17,14 @@ import com.pinyougou.pojo.TbUserExample.Criteria;
 import com.pinyougou.user.service.UserService;
 
 import entity.PageResult;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import util.CreateCode;
+
+import javax.jms.*;
+
 
 /**
  * 服务实现层
@@ -150,7 +159,15 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private RedisTemplate redisTemplate;
+	@Autowired
+	private JmsTemplate jmsTemplate;
+	@Autowired
+	private Destination smsDestination;
 
+	@Value("${template_code}")
+	private String template_code;
+	@Value("${sign_name}")
+	private String sign_name;
 	@Override
 	public void createSmsCode(String phone) {
 		//生成一个6位随机数
@@ -161,6 +178,19 @@ public class UserServiceImpl implements UserService {
 		//放入redis
 		redisTemplate.boundHashOps("smscode").put(phone,code);
 		//将短信发送到activeMQ
+		jmsTemplate.send(smsDestination, new MessageCreator() {
+			@Override
+			public Message createMessage(Session session) throws JMSException {
+				MapMessage message = session.createMapMessage();
+				message.setString("mobile",phone);
+				message.setString("template_code", template_code);
+				message.setString("sign_name", sign_name);
+				Map map = new HashMap();
+				map.put("code", code);
+				message.setString("param", JSON.toJSONString(map));
+				return message;
+			}
+		});
 	}
 
 	@Override
